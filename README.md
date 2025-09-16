@@ -25,4 +25,4 @@ Possible future updates: adding ODE solvers.
 
 ---
 
-Note: this project can be updated during time, but this is not guarandteed.
+Note: this is a oersinal project created for learning. It can be updated during time, but this is not guarandteed.
