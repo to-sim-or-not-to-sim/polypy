@@ -21,7 +21,7 @@ After putting [this file](polypy.py) in your working directory you can import th
 
 ---
 
-Possible future updates: adding ODE solvers.
+Possible future updates: adding ODE solvers, code cleanup, other improvements.
 
 ---
 
