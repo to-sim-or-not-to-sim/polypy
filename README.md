@@ -1,5 +1,5 @@
 # Polypy
-A simple python library for polynomials and other math tools. 
+A simple python library for polynomials and other math tools. This README is also structured in a way that represent the history and evolution of this code.
 
 ---
 # Polynomials
@@ -17,12 +17,16 @@ A simple python library for polynomials and other math tools.
 - There are three different functions to create the n-th Legendre, Laguerre and Hermite polynomials.
 
 ## Example of use
-After putting [this file](polypy.py) in your working directory you can import the library like this: [import polypy as plp](getting_started.png). [This](example.png) is an example of use after. This library is not yet available on PyPI, so you need to place polypy.py in your project directory to use it.
+After putting [this file](polypy.py) in your working directory you can import the library like this: [import polypy as plp](getting_started.png). [This](example.png) is an example of use after. This library is not yet available on PyPI, so you need to place polypy.py in your project directory to use it. Now there is also the function "test_Poly()" to see an example of code built in the library.
+
+# Additions
+## SODE class
+This class represents separable ODE and solve Cauchy problem related using second-order taylor expansions for a better approximation and plotting the solution. This can be confronted with the actual solution as I've done in the "test_SODE()" function, which is also an example of use of this class.
 
 ---
 
-Possible future updates: adding ODE solvers, code cleanup, other improvements.
+Possible future updates: adding general ODE solvers and root finding algorithms (like Newton), code cleanup, other improvements.
 
 ---
 
-Note: this is a oersinal project created for learning. It can be updated during time, but this is not guarandteed.
+Note: this is a persinal project created for learning. It can be updated during time, but this is not guaranteed.
