@@ -22,7 +22,7 @@ def fact(n: int):
         return 1
     else:
         k=1
-        for i in range(0,n):
+        for i in range(n):
             k*=i+1
         return k
     raise ValueError("Something unexpected happened.")
@@ -58,7 +58,7 @@ class Poly:
             self.coeffs=coeff
             self.exponents=[]
             self.useful_coeffs=[]
-            for i in range(0,len(self.coeffs)):
+            for i in range(len(self.coeffs)):
                 if self.coeffs[i]!=0:
                     self.exponents.append(i)
                     self.useful_coeffs.append(self.coeffs[i])
@@ -68,9 +68,9 @@ class Poly:
     def print_poly(self, approximation=True):
         '''Prints the polynomial in a readable way. Example: Poly([1,2,3]).print_poly() -> prints "1 + 2 x + 3 x^2".'''
         if self!=None and self.coeffs!=[0]:
-            for i in range(0,len(self.exponents)):
+            for i in range(len(self.exponents)):
                 if self.exponents[i]==0:
-                    if approximation==True:
+                    if approximation:
                         print(approx(self.useful_coeffs[i]),sep="",end="")
                     else:
                         print(self.useful_coeffs[i],sep="",end="")
@@ -84,12 +84,12 @@ class Poly:
                             print("x",sep="",end="")
                     else:
                         if i==0:
-                            if approximation==True:
+                            if approximation:
                                 print(approx(self.useful_coeffs[i])," x",sep="",end="")
                             else:
                                 print(self.useful_coeffs[i]," x",sep="",end="")
                         else:
-                            if approximation==True:
+                            if approximation:
                                 print(approx(np.abs(self.useful_coeffs[i]))," x",sep="",end="")
                             else:
                                 print(np.abs(self.useful_coeffs[i])," x",sep="",end="")
@@ -102,12 +102,12 @@ class Poly:
                         print(" x^",self.exponents[i],sep="",end="")
                     else:
                         if i==0:
-                            if approximation==True:
+                            if approximation:
                                 print(approx(self.useful_coeffs[i])," x^",self.exponents[i],sep="",end="")
                             else:
                                 print(self.useful_coeffs[i]," x^",self.exponents[i],sep="",end="")
                         else:
-                            if approximation==True:
+                            if approximation:
                                 print(approx(np.abs(self.useful_coeffs[i]))," x^",self.exponents[i],sep="",end="")
                             else:
                                 print(np.abs(self.useful_coeffs[i])," x^",self.exponents[i],sep="",end="")
@@ -125,7 +125,7 @@ class Poly:
         '''Calculates the value of the polynomial in x0. Example: Poly([1,2,3]).value(0) -> returns 1.'''
         if self!=None:
             value=0
-            for i in range(0,len(self.exponents)):
+            for i in range(len(self.exponents)):
                 value+=self.useful_coeffs[i]*(x0**self.exponents[i])
             return value
         else:
@@ -136,7 +136,7 @@ class Poly:
             new_coeff=[]
             N=max(len(self.coeffs),len(other.coeffs))
             n=min(len(self.coeffs),len(other.coeffs))
-            for i in range(0,n):
+            for i in range(n):
                 new_coeff.append(self.coeffs[i]+other.coeffs[i])
             for i in range(n,N):
                 if len(self.coeffs)==N:
@@ -162,7 +162,7 @@ class Poly:
         '''Returns the product between two polynomials. Example: P1=Poly([0,1]), P2=Poly([0,0,1]). P1.product(P2) -> returns x^3.'''
         if self!=None and other!=None:
             P0=Poly([0])
-            for i in range(0,len(self.coeffs)):
+            for i in range(len(self.coeffs)):
                 new_coeff=[]
                 for k in range(0,i):
                     new_coeff.append(0)
@@ -184,14 +184,14 @@ class Poly:
         '''Returns the quotient and the remainder of the division between two polynomials. Example: P1=Poly([2,2,1]), P2=Poly([1,1]). P1.divide(P2) -> returns x+1, 1 (both as a Poly object).'''
         if self!=None and other!=None and other.coeffs!=[0]:
             new_coeff=[]
-            for i in range(0,len(self.coeffs)-len(other.coeffs)+1):
+            for i in range(len(self.coeffs)-len(other.coeffs)+1):
                 new_coeff.append(0)
             P1=Poly(self.coeffs)
             while len(P1.coeffs)>=len(other.coeffs):
                 param=P1.coeffs[len(P1.coeffs)-1]/other.coeffs[len(other.coeffs)-1]
                 new_coeff[len(P1.coeffs)-len(other.coeffs)]=param
                 P2_coeff=[]
-                for i in range(0,len(P1.coeffs)-len(other.coeffs)):
+                for i in range(len(P1.coeffs)-len(other.coeffs)):
                     P2_coeff.append(0)
                 P2_coeff.append(param)
                 P1=P1.difference(other.product(Poly(P2_coeff)))
@@ -227,7 +227,7 @@ class Poly:
         '''Returns the n-th derivative of the polynomial as a new polynomial. Example Poly([0,0,1]).polyderivative_n(2) -> returns 2, as a Poly object.'''
         if self!=None:
             p=self
-            for i in range(0,n):
+            for i in range(n):
                 p=p.polyderivative()
             return p
         else:
@@ -236,7 +236,7 @@ class Poly:
         '''Returns the integral with a given value for c. Example Poly([0,2]).polyint(c=3) -> returns x^2+3.'''
         if self!=None:
             new_coeff=[c]
-            for i in range(0,len(self.coeffs)):
+            for i in range(len(self.coeffs)):
                 new_coeff.append(self.coeffs[i]/(i+1))
             return Poly(new_coeff)
         else:
@@ -245,7 +245,7 @@ class Poly:
         '''Returns the function that evaluates the polynomial. Example: Poly([0,1]).func() -> returns f(x)=x.'''
         def poly_func(x):
             f=0
-            for i in range(0,len(self.exponents)):
+            for i in range(len(self.exponents)):
                f+=self.useful_coeffs[i]*x**(self.exponents[i])
             return f
         return poly_func
@@ -254,7 +254,7 @@ class Poly:
         x=np.linspace(a,b,draw_prec)
         f=self.func()
         plt.plot(x,f(x))
-        if show==True:
+        if show:
             plt.show()
     def bisection(self,a,b,prec=0.0001,approximation=True):
         '''Using bisection approximates a zero between two points for the polynomial. It works only if f(a)*f(b)<0.'''
@@ -268,7 +268,7 @@ class Poly:
             else:
                 b=c
             c=(a+b)/2
-        if approximation==True:
+        if approximation:
             lvl=0
             while prec<1:
                 prec*=10
@@ -286,10 +286,36 @@ def std_poly(n: int):
     if n<0:
         raise ValueError("n must be a positive integer.")        
     coeff=[]
-    for i in range(0,n):
+    for i in range(n):
         coeff.append(0)
     coeff.append(1)
     return Poly(coeff)
+#----------------------------------------------------------------  
+def test_Poly():
+    '''Test for Poly class.'''
+    print("p1= ",end="")
+    p1=Poly([1,2,3])
+    p1.print_poly()
+    print("p2= ",end="")
+    p2=std_poly(1).multiply(2)
+    p2.print_poly()
+    print("p1+p2= ",end="")
+    p1.sum(p2).print_poly()
+    print("p1-p2= ",end="")
+    p1.difference(p2).print_poly()
+    print("p1*p2= ",end="")
+    p1.product(p2).print_poly()
+    print("p1/p2= ",end="")
+    p3,r=p1.divide(p2)
+    p3.print_poly()
+    print("r= ",end="")
+    r.print_poly()
+    print("d(p1)/dx= ",end="")
+    p1.polyderivative().print_poly()
+    print("d2(p1)/dx2= ",end="")
+    p1.polyderivative_n(2).print_poly()
+    print("integral p1, c=0 : ",end="")
+    p1.polyint(c=0).print_poly()
 #----------------------------------------------------------------
 #DERIVATIVES AND DEFINITE INTEGRALS
 #----------------------------------------------------------------
@@ -297,7 +323,7 @@ def derivative(f: Callable[[float],float],x0: float,prec=0.0001,approximation=Tr
     '''Approximates the derivative of a function at a given point.'''
     der_plus=(f(x0+prec)-f(x0))/prec
     der_minus=(f(x0-prec)-f(x0))/prec
-    if approximation==True:
+    if approximation:
         a=0
         while prec<1:
             prec*=10
@@ -329,7 +355,7 @@ def integral(f: Callable[[float],float],a: float,b: float,prec=0.0001,approximat
         integral_minus+=prec*min(f(a),f(a+prec))
         integral_plus+=prec*max(f(a),f(a+prec))
         a+=prec
-    if approximation==True:
+    if approximation:
         a=0
         while prec<1:
             prec*=10
@@ -345,7 +371,7 @@ def grad(f: Callable[[...,float],float],xs0: list,prec=0.0001,approximation=True
         raise ValueError("The function and the point don't have the same size.")
     xs0=list(xs0)
     grad=[]
-    for i in range(0,len(xs0)):
+    for i in range(len(xs0)):
         g= lambda x: f(*(xs0[:i]+[x]+xs0[i+1:]))
         grad.append(derivative(g,xs0[i],prec,approximation))
     return grad
@@ -357,8 +383,8 @@ def hesse(f: Callable[[...,float],float],xs0: list,prec=0.0001,approximation=Tru
         raise ValueError("The function and the point don't have the same size.")
     hesse=np.zeros((lenf,lenf))
     xs0=list(xs0)
-    for j in range(0,lenf):
-        for i in range(0,lenf):
+    for j in range(lenf):
+        for i in range(lenf):
             if i>j:
                 g= lambda xj, xi: f(*(xs0[:j]+[xj]+xs0[j+1:i]+[xi]+xs0[i+1:]))
                 dg= lambda xj, xi: (grad(g,[xj,xi],prec,approximation=False))[0]
@@ -384,7 +410,7 @@ def taylor(f: Callable[[float],float],x0: float,lvl=3,prec=0.01,approximation=Tr
         lvl=int(lvl)
     p=Poly([f(x0)])
     stp=std_poly(1).difference(Poly([x0]))
-    for i in range(0,lvl):
+    for i in range(lvl):
         q=stp.pow(i+1).multiply(derivative_n(f,x0,i+1,prec,approximation)/fact(i+1))
         p=p.sum(q)
     return p
@@ -434,3 +460,47 @@ def hermite_poly(n: int):
     else:
         return Poly([0,2]).product(hermite_poly(n-1)).difference(hermite_poly(n-2).multiply(2*n-2))
 #----------------------------------------------------------------        
+#ODE
+#----------------------------------------------------------------       
+class SODE: #separable ODE
+    def __init__(self,f: Callable[[float],float],g: Callable[[float],float],t_0=0,y_0=1,prec=0.0001):
+        '''Initializes the Cauchy problem described by dy/dt=f(y)g(t), y(t_0)=y_0.'''
+        self.t=[t_0]
+        self.y=[y_0]
+        self.f=f
+        self.g=g
+        self.df=lambda y: derivative(f,y,prec,approximation=False)
+        self.dg=lambda t: derivative(g,t,prec,approximation=False)
+    def plot_solution(self,show=True):
+        '''To use after having updated the points of the function graph using update(self,dt,DT). Plots the approximated result.'''
+        plt.plot(self.t,self.y)
+        if show:
+            plt.show()
+    def update(self,dt=0.01,DT=1):
+        t_0=self.t[len(self.t)-1]
+        while t_0<DT:
+            y_0=self.y[len(self.y)-1]
+            f_0=self.f(y_0)
+            g_0=self.g(t_0)
+            dy_0=f_0*g_0
+            dy2_0=self.df(y_0)*g_0*dy_0+self.dg(t_0)*f_0
+            self.y.append(y_0+dy_0*dt+dy2_0*(dt**2)/2)
+            t_0+=dt
+            self.t.append(t_0)
+#----------------------------------------------------------------  
+def test_SODE():
+    '''Test for SODE class.'''
+    def f(y):
+        return 2*y**2
+    def g(t):
+        return t
+
+    pc1=SODE(f,g,0,1) 
+    pc1.update(dt=0.001,DT=0.99)
+    x=np.linspace(0,0.99)
+    plt.plot(x,1/(1-x**2),label="SOLUTION")
+    plt.legend()
+    pc1.plot_solution()    
+#----------------------------------------------------------------  
+
+  
